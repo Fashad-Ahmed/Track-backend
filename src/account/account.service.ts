@@ -18,8 +18,7 @@ export class AccountService {
     try {
       const newAccount = await new this.accountModel({
         account: req.account,
-        accountName:
-          req.accountName === 'Income' ? req.accountName : -req.accountName,
+        accountName: req.accountName,
         accountType: req.accountType,
         accountBalance: req.accountBalance,
         accountTime: req.accountTime,
@@ -34,17 +33,18 @@ export class AccountService {
     }
   }
 
-  async showAccounts(userId): Promise<any> {
-    console.log('account request started');
+  async showAccounts(req): Promise<any> {
+    console.log('account request started', req);
 
     try {
       const getAccounts = await this.accountModel
-        .find({ userId: userId })
+        .find({ userId: req.userId })
+        .populate('userId', '', this.accountModel)
         .exec();
-      if (!getAccounts) {
-        console.log(`no account found!`);
-      }
-      return getAccounts;
+
+      console.log(getAccounts);
+
+      return { getAccounts, statusCode: 200 };
     } catch (error) {
       console.log(error);
       throw [404, error.message];

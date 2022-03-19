@@ -42,6 +42,7 @@ export class AuthService {
         const user = {
           userExist,
         };
+        console.log(user);
         return { ...user, statusCode: 200 };
       } catch (error) {
         throw [404, error.message];

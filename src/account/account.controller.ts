@@ -1,4 +1,4 @@
-import { Controller, Post, Body, Req, Get, Query } from '@nestjs/common';
+import { Controller, Post, Body, Req, Get, Param } from '@nestjs/common';
 import { AccountService } from './account.service';
 import { Request } from 'express';
 
@@ -18,8 +18,8 @@ export class AccountController {
     }
   }
 
-  @Get('show')
-  async show(@Query('accountName') accountName: any): Promise<any> {
-    return this.accountervice.showAccounts(accountName);
+  @Post('show')
+  async show(@Req() request: Request) {
+    return this.accountervice.showAccounts(request.body);
   }
 }

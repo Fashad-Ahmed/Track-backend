@@ -12,7 +12,7 @@ export class AuthController {
   ): Promise<any> {
     try {
       const res = await this.authService.signin(email, password);
-      return { result: res };
+      return res;
     } catch (error) {
       return error;
     }
